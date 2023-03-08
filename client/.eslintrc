@@ -1,0 +1,87 @@
+{
+    "extends": [
+        "airbnb",
+        "prettier",
+        "prettier/react"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "react/no-string-refs": 0,
+        "react/jsx-props-no-spreading": 0,
+        "react/sort-comp": 0,
+        "react/prop-types": 0,
+        "react/require-default-props": 0,
+        "react/no-array-index-key": 0,
+        "react-native/no-inline-styles": 0,
+        "react/no-access-state-in-setstate": 0,
+        "arrow-body-style": "off",
+        "class-methods-use-this": "off",
+        "default-case": "off",
+        "import/no-dynamic-require": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off",
+        "no-param-reassign": "off",
+        "no-plusplus": "off",
+        "no-return-assign": "off",
+        "no-shadow": "off",
+        "no-underscore-dangle": "off",
+        "no-use-before-define": "off",
+        "react/destructuring-assignment": "off",
+        "react/forbid-prop-types": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "react/no-this-in-sfc": "off",
+        "react/prefer-stateless-function": "off",
+        "no-console": "error",
+        "yoda": "off",
+        "no-unused-vars": [
+            "warn",
+            {
+                "args": "after-used",
+                "argsIgnorePattern": "^_",
+                "ignoreRestSiblings": true,
+                "vars": "all"
+            }
+        ],
+//        "comma-dangle": [
+//            "error",
+//            "never"
+//        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages"
+        ],
+        "import/no-unresolved": [
+            "error",
+            {
+                "ignore": [
+                    "./stories$",
+                    "/storiesOf",
+                    "^native-base",
+                    "^react-native",
+                    "^reation-build",
+                    "^~"
+                ]
+            }
+        ]
+    },
+    "globals": {
+        "window": true,
+        "document": true,
+        "localStorage": true,
+        "FormData": true,
+        "FileReader": true,
+        "Blob": true,
+        "navigator": true,
+        "console": false
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "legacyDecorators": true
+        }
+    }
+}

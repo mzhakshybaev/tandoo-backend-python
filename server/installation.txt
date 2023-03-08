@@ -1,0 +1,10 @@
+Installation on Windows
+
+1. install python for windows >= 2.7.15 (including pip)
+2. install redis for windows (Redis-x64-3.2.100.msi, https://github.com/MicrosoftArchive/redis/releases)
+3. run "pip install -r requirements.txt"
+4. optionally reboot
+5. run "python run.py"
+
+PROFIT
+

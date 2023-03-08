@@ -1,0 +1,65 @@
+image: chrome:v1
+
+stages:
+  - test
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+deploy_test_server:
+  stage: deploy
+  tags:
+    - test
+  script:
+    - echo "$(whoami)@$(hostname)"
+    - pwd
+    - ls -la
+    - echo $'SECRET_KEY = "4fc5b9d2593d5d7"' > appconf.py
+    - echo $'DB_URL = "postgresql://postgres:QwEr123456@localhost:5432/tandoo_test"' >> appconf.py
+    - echo $'REDIS_URI = "localhost"' >> appconf.py
+    - echo $'REDIS_DB = 13' >> appconf.py
+    - echo $'DEBUG = False' >> appconf.py
+    - echo $'UPLOAD_FOLDER = "../../uploads/"' >> appconf.py
+    - echo $'DOCS_FILE_UPLOAD_FOLDER = "/uploads/product/file/"' >> appconf.py
+    - echo $'LANGUAGE_FOLDER = "../client/assets/i18n/"' >> appconf.py
+    - echo $'API_ZAKUPKI = "https://eds.zakupki.gov.kg/t-planning/api/v1/"' >> appconf.py
+    - echo $'JWT_SECRET_KEY = "mY_1_vErY_tOp_sEcReT_!"' >> appconf.py
+    - rsync -rv --delete-after . /var/www/catalog.gov.kg/server/
+    - rm -rf ~/.local/
+    - ls -la /var/www/catalog.gov.kg/server/
+    - pip install -r requirements.txt
+    #  - chmod 777 -R /var/www/catalog.gov.kg/server/
+    - touch /etc/uwsgi/apps-available/catalog.ini
+  only:
+    - master
+
+deploy_prod_server:
+  stage: deploy
+  tags:
+    - prod
+  script:
+    - echo "$(whoami)@$(hostname)"
+    - pwd
+    - ls -la
+    - echo $'SECRET_KEY = "4fc5b9d2593d5d7"' > appconf.py
+    - echo $'DB_URL = "postgresql://postgres:ictlab2018@localhost:5432/ecatalog_dev2"' >> appconf.py
+    - echo $'REDIS_URI = "localhost"' >> appconf.py
+    - echo $'REDIS_DB = 13' >> appconf.py
+    - echo $'DEBUG = False' >> appconf.py
+    - echo $'UPLOAD_FOLDER = "../../uploads/"' >> appconf.py
+    - echo $'DOCS_FILE_UPLOAD_FOLDER = "/uploads/product/file/"' >> appconf.py
+    - echo $'LANGUAGE_FOLDER = "../client/assets/i18n/"' >> appconf.py
+    - echo $'API_ZAKUPKI = "https://eds.zakupki.gov.kg/planning/api/v1/"' >> appconf.py
+    - echo $'JWT_SECRET_KEY = "mY_1_vErY_tOp_sEcReT_!"' >> appconf.py
+    - rsync -rv --delete-after . /var/www/tandoo.zakupki.gov.kg/server/
+    - rm -rf ~/.local/
+    - ls -la /var/www/tandoo.zakupki.gov.kg/server/
+    - pip install -r requirements.txt
+    #  - echo "chmod 777 -R /var/www/tandoo.zakupki.gov.kg/server/"
+    #  - chmod 777 -R /var/www/tandoo.zakupki.gov.kg/server/
+    - echo "touch /etc/uwsgi/apps-available/catalog.ini"
+    - touch /etc/uwsgi/apps-available/catalog.ini
+  only:
+    - prod

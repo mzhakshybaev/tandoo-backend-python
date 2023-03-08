@@ -1,0 +1,3 @@
+{
+  "reject": "react,react-native,mobx,webpack,webpack-dev-server,css-loader"
+}

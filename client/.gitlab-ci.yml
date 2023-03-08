@@ -1,0 +1,57 @@
+stages:
+  - test
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+    - vendor/
+    - android/build/
+    - android/app/build/
+
+before_script:
+  - npm i
+
+deploy_test_site:
+  stage: deploy
+  tags:
+    - test
+  cache:
+    paths:
+      - node_modules/
+      - package-lock.json
+  script:
+    - whoami
+    - hostname
+    - npm run web:build
+    - cd web/build
+    - rm -rf /var/www/catalog.gov.kg/client/*
+    - cp ./* -f -v -R /var/www/catalog.gov.kg/client/
+  environment:
+    name: t-tandoo.ictlab.kg
+    url: http://t-tandoo.ictlab.kg
+  only:
+    - master
+
+deploy_prod_site:
+  stage: deploy
+  tags:
+    - prod
+  cache:
+    paths:
+      - node_modules/
+      - package-lock.json
+  script:
+    - whoami
+    - hostname
+    - npm run web:build
+    - cd web/build
+#    - ls -la
+    - rm -rf /var/www/tandoo.zakupki.gov.kg/client/*
+    - cp ./* -f -v -R /var/www/tandoo.zakupki.gov.kg/client/
+#    - chown -R www-data:www-data /var/www/tandoo.zakupki.gov.kg/client
+  environment:
+    name: tandoo.zakupki.gov.kg
+    url: https://tandoo.zakupki.gov.kg
+  only:
+    - prod
